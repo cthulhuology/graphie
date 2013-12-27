@@ -1,0 +1,12 @@
+{application, graphie,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { graphie_app, []}},
+  {env, []}
+ ]}.
