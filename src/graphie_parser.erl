@@ -2,7 +2,7 @@
 -author({ "David J. Goehrig", "dave@dloh.org" }).
 -copyright(<<"© 2013 David J. Goehrig"/utf8>>).
 
--export([ parse/1 ]).
+-export([ parse/1, parse_file/1 ]).
 
 route(String) ->
 	case string:tokens(String,"/") of
@@ -32,5 +32,7 @@ parse(String) ->
 	Words = string:tokens(Normalized," "),	%% get a list of individual words separated by spaces
 	exchange(Words).
 		
-	
+parse_file(Filename) ->
+	{ ok, Contents } = file:read_file(Filename),
+	parse(binary:bin_to_list(binary:replace(Contents,<<"\n">>,<<" ">>,[global]))).			
 

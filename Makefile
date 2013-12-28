@@ -1,7 +1,9 @@
 
+.PHONY: deps test dist compile
+
 all: compile
 
-compile:
+compile: deps
 	rebar compile
 
 dist:
@@ -10,4 +12,5 @@ dist:
 test: 
 	rebar eunit skip_deps=true
 
-
+deps:
+	rebar get-deps

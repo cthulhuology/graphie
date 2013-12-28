@@ -17,6 +17,9 @@ parse_test() ->
 	?assertMatch([{"foo","test","bar"}],graphie_parser:parse("foo/test -> bar ; ")),
 	?assertMatch([{"foo","#","bar"},{error,"narf",[";"]}],graphie_parser:parse("foo -> bar ; narf")).
 
+parse_file_test() ->
+	?assertMatch([{"foo","#","bar"},{"narf","#.us","blat"},{"bar","#","narf"}],graphie_parser:parse_file("../test/test.graph")).
+
 -endif.
 
 
