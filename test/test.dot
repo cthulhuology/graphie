@@ -1,0 +1,10 @@
+
+digraph {
+	producer [ shape=box];
+	"pipe-in" [ shape=circle ];
+	producer -> "pipe-in" [ label="#" ];
+	"pipe-out" [ shape=box ];
+	"pipe-in" -> "pipe-out" [ label="pipe process" ];
+	consumer [ shape=circle ];
+	"pipe-out" -> consumer [ label="#.us"];
+}
