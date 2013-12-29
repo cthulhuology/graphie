@@ -1,5 +1,5 @@
 
-.PHONY: deps test dist compile
+.PHONY: deps test dist compile clean
 
 all: compile
 
@@ -14,3 +14,6 @@ test:
 
 deps:
 	rebar get-deps
+
+clean:
+	rebar clean
