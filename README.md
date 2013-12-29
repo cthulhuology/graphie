@@ -5,6 +5,6 @@ Graphie is an Erlang application for creating and managing complex routing topol
 
 It is currently a work in progress and may cease to be at any time.
 
-All code is under a style MIT LICENSE.
+All code is under a MIT LICENSE.
 
 
