@@ -8,17 +8,16 @@
 
 parse_test() ->
 	io:format("parsing samples~n",[]),
-	?assertMatch([{error,"foo",[";"]}], graphie_parser:parse("foo")),
 	?assertMatch([{error,"->",[";"]}], graphie_parser:parse("foo ->")),
 	?assertMatch([{error,"->",[";"]}], graphie_parser:parse("foo -> ;")),
-	?assertMatch([{"foo","#","bar"}], graphie_parser:parse("foo -> bar")),
-	?assertMatch([{"foo","#","bar"}],graphie_parser:parse("foo -> bar ;")),
-	?assertMatch([{"foo","#","bar"}],graphie_parser:parse("foo -> bar ; ")),
-	?assertMatch([{"foo","test","bar"}],graphie_parser:parse("foo/test -> bar ; ")),
-	?assertMatch([{"foo","#","bar"},{error,"narf",[";"]}],graphie_parser:parse("foo -> bar ; narf")).
+	?assertMatch([{bind,"foo","#","bar"}], graphie_parser:parse("foo -> bar")),
+	?assertMatch([{bind,"foo","#","bar"}],graphie_parser:parse("foo -> bar ;")),
+	?assertMatch([{bind,"foo","#","bar"}],graphie_parser:parse("foo -> bar ; ")),
+	?assertMatch([{bind,"foo","test","bar"}],graphie_parser:parse("foo/test -> bar ; ")),
+	?assertMatch([{bind,"foo","#","bar"},{source,"narf","#"}],graphie_parser:parse("foo -> bar ; narf")).
 
 parse_file_test() ->
-	?assertMatch([{"foo","#","bar"},{"narf","#.us","blat"},{"bar","#","narf"}],graphie_parser:parse_file("../test/test.graph")).
+	?assertMatch([{bind,"foo","#","bar"},{bind,"narf","#.us","blat"},{bind,"bar","#","narf"}],graphie_parser:parse_file("../test/test.graph")).
 
 -endif.
 

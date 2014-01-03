@@ -7,12 +7,14 @@
 
 render([],Acc) ->
 	Acc;
-render([{ Exchange, Key, Queue } | Graph ], Acc) when is_binary(Acc) ->
+render([{ bind, Exchange, Key, Queue } | Graph ], Acc) when is_binary(Acc) ->
 	E = binary:list_to_bin(Exchange),
 	Q = binary:list_to_bin(Queue),
 	K = binary:list_to_bin(Key),
 	Dot = <<Acc/binary,"\"", E/binary, "\" -> \"", Q/binary, "\" [ label=\"", K/binary, "\" ];\n">>,
-	render(Graph, Dot).
+	render(Graph, Dot);
+render([ _ | Graph ], Acc) ->
+	render(Graph,Acc).
 
 render(Graph) ->
 	Bin = render(Graph,<<"">>),

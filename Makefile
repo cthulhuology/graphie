@@ -1,19 +1,22 @@
 
-.PHONY: deps test dist compile clean
+.PHONY: deps test dist compile clean console
 
-all: compile
+all:  console
+
+deps:
+	rebar get-deps
 
 compile: deps
 	rebar compile
 
-dist:
+dist: compile
 	rebar generate
 
 test: 
 	rebar eunit skip_deps=true
 
-deps:
-	rebar get-deps
-
 clean:
 	rebar clean
+
+console: dist
+	./rel/graphie/bin/graphie console

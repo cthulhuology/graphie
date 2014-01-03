@@ -15,12 +15,14 @@ connect(Host,Port,VHost,Username,Password) ->
 
 route(_Channel,[]) ->
 	ok;
-route(Channel,[ { Exchange, Key, Queue } | Graph]) ->
+route(Channel,[ { bind, Exchange, Key, Queue } | Graph]) ->
 	E = binary:list_to_bin(Exchange),
 	Q = binary:list_to_bin(Queue),
 	K = binary:list_to_bin(Key),
 	#'exchange.declare_ok'{} = amqp_channel:call(Channel, #'exchange.declare'{ exchange = E, type = <<"topic">>, durable = false, auto_delete = true, internal = false, arguments = []}),
 	#'queue.declare_ok'{queue = Q} = amqp_channel:call(Channel, #'queue.declare'{ queue = Q, auto_delete = true,  durable = false, arguments = [] }),
 	#'queue.bind_ok'{} = amqp_channel:call(Channel, #'queue.bind'{ queue = Q, exchange = E, routing_key = K }),
+	route(Channel,Graph);
+route(Channel, [ _ | Graph ]) ->
 	route(Channel,Graph).
 
